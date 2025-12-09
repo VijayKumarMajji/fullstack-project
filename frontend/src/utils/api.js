@@ -1,11 +1,14 @@
+// frontend/src/utils/api.js
 import axios from 'axios';
-const API = axios.create({
-  baseURL: 'http://localhost:5000/api',
-  headers: { 'Content-Type': 'application/json' },
+
+const base =
+  import.meta.env.VITE_API_URL ||
+  'https://fullstack-project-2-lad3.onrender.com'; // <- your Render URL
+
+const baseURL = base.replace(/\/$/, '') + '/api';
+
+const api = axios.create({
+  baseURL,
 });
-API.interceptors.request.use(cfg => {
-  const token = localStorage.getItem('token');
-  if (token) cfg.headers.Authorization = `Bearer ${token}`;
-  return cfg;
-});
-export default API;
+
+export default api;
